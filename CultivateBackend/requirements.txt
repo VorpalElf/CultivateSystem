@@ -1,0 +1,5 @@
+flask
+google-genai
+serpapi
+google-search-results
+json

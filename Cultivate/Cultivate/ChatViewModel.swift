@@ -9,16 +9,40 @@ import Foundation
 
 class ChatViewModel: ObservableObject {
     @Published var messages: [Message] = [
-        Message(text: "Nice, what's your name", isUser: true),
-        Message(text: "Hello, how can I help?", isUser: false),
-        Message(text: "Hi, my name is Gemini. Nice to meet you! How can I help?", isUser: false)
+        Message(text: "Hi, my name is Cultivate. Nice to meet you! How can I help?", isUser: false)
     ]
     @Published var inputText: String = ""
     
     func sendMessage(input: String) {
         messages.append(Message(text: input, isUser: true))
-        var ans: String = ""
         
-        messages.append(Message(text: "Done", isUser: false))
+        // Generate endpoint URL
+        guard let url = URL(string: "http://192.168.1.143:5000/server-request") else {
+            messages.append(Message(text: "Failed to connect to server", isUser: false))
+            return
+        }
+        
+        // Initiate request
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let body: [String: String] = ["input": input]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let reply = json["response"] as? String else {
+                // If error
+                DispatchQueue.main.async {
+                    self.messages.append(Message(text: "Error", isUser: false))
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                self.messages.append(Message(text: reply, isUser: false))
+            }
+        }
+        .resume()
     }
 }

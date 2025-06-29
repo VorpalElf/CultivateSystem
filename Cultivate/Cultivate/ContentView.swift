@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct Message: Identifiable {
     let id = UUID()
@@ -38,13 +39,13 @@ struct ContentView: View {
                                     .cornerRadius(10)
                                     .frame(maxWidth: 280, alignment: .trailing)
                             } else {
-                                Text(message.text)
+                                Markdown(message.text)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 10)
                                     .background(Color.gray.opacity(0.2))
                                     .foregroundColor(.black)
                                     .cornerRadius(10)
-                                    .frame(maxWidth: 280, alignment: .leading)
+                                    .frame(maxWidth: 300, alignment: .leading)
                                 Spacer()
                             }
                         }
