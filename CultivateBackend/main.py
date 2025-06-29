@@ -27,8 +27,8 @@ def handle_post():
                 # Change to "based on lead"
                 "You are an API that returns answers in a JSON format suitable for the SERP API. "
                 "If the user is asking to find, search for, or generate leads/clients/contacts/businesses/organizations, generate a Google search query string in a JSON object with a 'query' field.\n"
-                "Otherwise, return False"
-                "Example: {\"query\": \"What is the capital of France?\"}. "
+                "Otherwise, said the exact term Irrelevant. For example, the user asked about the capital of France, answer Irrelevant"
+                "JSON Example: {\"query\": \"Norwich School Meal Provider\"}. "
                 "Do not include any text outside the JSON object. The output should be just JSON, no other outputs and no next line\n"
                 f"User request: \"{user_input}\""
             )
@@ -38,13 +38,16 @@ def handle_post():
     # Handle response and return
     response_text = response.text
     
-    if response_text == "False":
+    if response_text == "Irrelevant":
         print("Irrelevant")
-        response = client.models.generate_content(
+        
+        irrelevant = client.models.generate_content(
         model="gemini-2.0-flash",
         contents=user_input)
         
-        return {'response': response}, 200
+        irrelevant_text = irrelevant.text
+        
+        return {'response': irrelevant_text}, 200
     
     # Extract value with string
     end = len(response_text)
@@ -66,6 +69,7 @@ def handle_post():
     else:
         print("No organic results")
         results = []
+        results_json = json.dumps(results)
     
     # Send Results to Gemini for analysis
     final_response = client.models.generate_content(
