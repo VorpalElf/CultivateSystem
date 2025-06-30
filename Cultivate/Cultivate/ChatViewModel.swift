@@ -18,7 +18,7 @@ class ChatViewModel: ObservableObject {
         
         // Generate endpoint URL
         // MARK: Change the address of your server
-        guard let url = URL(string: "http://10.0.83.49:5000/server-request") else {
+        guard let url = URL(string: "http://192.168.1.143:5000/server-request") else {
             messages.append(Message(text: "Failed to connect to server", isUser: false))
             return
         }

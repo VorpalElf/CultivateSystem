@@ -5,7 +5,7 @@ The Cultivate system aimed to help users to find suitable companies or clients, 
 The frontend of this system uses iOS (and SwiftUI) to render the UI as well as sending requests to the server.
 
 ## Test Run
-
+![Test Run Video](Screenshots/iPhone/Demo_Recording.MP4)
 
 ## Software Requirements ##
 - iOS 15 or later / iPadOS 15 or later
