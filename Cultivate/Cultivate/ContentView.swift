@@ -20,60 +20,70 @@ struct ContentView: View {
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        VStack {
-            Divider()
-                .frame(minHeight: 15)
-            
-            // Chat History View
-            ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(viewModel.messages) { message in
-                        HStack {
-                            if message.isUser {
-                                Spacer()
-                                Text(message.text)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 10)
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                                    .frame(maxWidth: 280, alignment: .trailing)
-                            } else {
-                                Markdown(message.text)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 10)
-                                    .background(Color.gray.opacity(0.2))
-                                    .foregroundColor(.black)
-                                    .cornerRadius(10)
-                                    .frame(maxWidth: 300, alignment: .leading)
-                                Spacer()
+        NavigationView {
+            VStack {
+                Divider()
+                    .frame(minHeight: 15)
+                
+                // Chat History View
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(viewModel.messages) { message in
+                            HStack {
+                                if message.isUser {
+                                    Spacer()
+                                    Text(message.text)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 10)
+                                        .background(Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                        .frame(maxWidth: 280, alignment: .trailing)
+                                } else {
+                                    Markdown(message.text)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 10)
+                                        .background(Color.gray.opacity(0.2))
+                                        .foregroundColor(.black)
+                                        .cornerRadius(10)
+                                        .frame(maxWidth: 300, alignment: .leading)
+                                    Spacer()
+                                }
                             }
+                            .frame(maxWidth: .infinity)
                         }
-                        .frame(maxWidth: .infinity)
                     }
+                    .padding()
+                }
+                .onTapGesture {
+                    isFocused = false
+                }
+                
+                Divider()
+                // Input View
+                HStack {
+                    TextField("Type here...", text: $inputString)
+                        .padding(10)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .focused($isFocused)
+                    
+                    Button("Send") {
+                        viewModel.sendMessage(input: inputString)
+                        inputString = ""
+                    }
+                    .padding(8)
                 }
                 .padding()
             }
-            .onTapGesture {
-                isFocused = false
-            }
-            
-            Divider()
-            // Input View
-            HStack {
-                TextField("Type here...", text: $inputString)
-                    .padding(10)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
-                    .focused($isFocused)
-                
-                Button("Send") {
-                    viewModel.sendMessage(input: inputString)
-                    inputString = ""
+            .toolbar {
+                Button {
+                    viewModel.NewConversation()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .foregroundColor(.blue)
                 }
-                .padding(8)
             }
-            .padding()
         }
     }
 }

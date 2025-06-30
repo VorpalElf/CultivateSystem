@@ -48,4 +48,10 @@ class ChatViewModel: ObservableObject {
         }
         .resume()
     }
+    
+    func NewConversation() {
+        messages = [
+                Message(text: "Hi, my name is Cultivate. Nice to meet you! How can I help?", isUser: false)
+            ]
+    }
 }

@@ -4,6 +4,9 @@ The Cultivate system aimed to help users to find suitable companies or clients, 
 
 The frontend of this system uses iOS (and SwiftUI) to render the UI as well as sending requests to the server.
 
+## Test Run
+
+
 ## Software Requirements ##
 - iOS 15 or later / iPadOS 15 or later
 - MacOS 12 or later
@@ -63,7 +66,9 @@ Once you've activated venv, you may run the following code to initalise your ser
 python main.py
 ```
 
-You may now request the app to provide leads based on your requirements. Once you've finished running the app, please press *Control + C* (on Mac) to terminate the run of server. Then, run the following command in your terminal to deactivate the virtual environment.
+You may now request the app to provide leads based on your requirements. 
+
+Once you've finished running the app, please press *Control + C* (on Mac) to terminate the run of server. Then, run the following command in your terminal to deactivate the virtual environment.
 
 ```Shell
 deactivate
