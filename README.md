@@ -4,10 +4,6 @@ The Cultivate system aimed to help users to find suitable companies or clients, 
 
 The frontend of this system uses iOS (and SwiftUI) to render the UI as well as sending requests to the server.
 
-## Features
-- Queries on leads or companies that suits your customer profile
-- Generate email
-
 ## Software Requirements ##
 - iOS 15 or later / iPadOS 15 or later
 - MacOS 12 or later
@@ -38,6 +34,8 @@ pip install -r requirements.txt
 export GEMINI_API_KEY=YOUR_GEMINI
 export SERP_API_KEY=YOUR_SERP
 ```
+If you don't want to input your API key everytime you activate the virtual environment, it would be nice to navigate to `venv/bin/activate` and add the command above to the end of the document. Don't forget to save it before you quit the document
+
 
 6. Replace the last line of `main.py` to your server's IP address (where you run this Python file). The code should look like this:
 ```Python

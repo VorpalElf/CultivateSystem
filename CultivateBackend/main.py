@@ -17,6 +17,7 @@ def handle_post():
     # Handle data
     data = request.get_json()
     user_input = data.get("input", "")
+    history = data.get("history", "")
     
     # Send request to Gemini and save it
     response = client.models.generate_content(
@@ -24,7 +25,6 @@ def handle_post():
         contents=user_input,
         config=GenerateContentConfig(
             system_instruction=(
-                # Change to "based on lead"
                 "You are an API that returns answers in a JSON format suitable for the SERP API. "
                 "If the user is asking to find, search for, or generate leads/clients/contacts/businesses/organizations, generate a Google search query string in a JSON object with a 'query' field.\n"
                 "Otherwise, said the exact term Irrelevant. For example, the user asked about the capital of France, answer Irrelevant"
@@ -94,4 +94,4 @@ def handle_post():
     return {'response': answer}, 200
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.143', port=5000, debug=True)
+    app.run(host='10.0.83.49', port=5000, debug=True)

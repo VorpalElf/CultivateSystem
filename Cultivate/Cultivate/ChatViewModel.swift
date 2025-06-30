@@ -18,16 +18,18 @@ class ChatViewModel: ObservableObject {
         
         // Generate endpoint URL
         // MARK: Change the address of your server
-        guard let url = URL(string: "http://192.168.1.143:5000/server-request") else {
+        guard let url = URL(string: "http://10.0.83.49:5000/server-request") else {
             messages.append(Message(text: "Failed to connect to server", isUser: false))
             return
         }
+        
+        let history = messages.map { ["text": $0.text, "isUser": $0.isUser] }
         
         // Initiate request
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let body: [String: String] = ["input": input]
+        let body: [String: Any] = ["input": input, "history": history]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
